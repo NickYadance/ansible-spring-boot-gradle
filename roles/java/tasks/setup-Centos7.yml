@@ -1,0 +1,9 @@
+---
+- name: Ensure Java8 is installed
+  remote_user: wuyi
+  become: yes
+  become_user: root
+  package: 
+   name: "{{ __java_packages }}"
+   state: present
+    

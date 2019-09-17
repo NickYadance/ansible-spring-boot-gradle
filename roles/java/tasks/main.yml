@@ -1,0 +1,2 @@
+---
+- include_tasks: setup-Centos7.yml

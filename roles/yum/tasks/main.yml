@@ -1,0 +1,10 @@
+---
+- name: Add repository
+  remote_user: wuyi
+  become: yes
+  become_user: root
+  yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      gpgcheck: no

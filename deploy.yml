@@ -1,0 +1,5 @@
+---
+- hosts: vbox
+  roles:
+    - yum
+    - java
