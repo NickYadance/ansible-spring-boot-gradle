@@ -1,5 +1,11 @@
 ---
 - hosts: vbox
+
+  vars_files: 
+    - pwd.yml
+    
+  become: yes
   roles:
     - yum
     - java
+    - gradle

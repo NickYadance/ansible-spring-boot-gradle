@@ -1,2 +1,2 @@
 #!/bin/bash
-ansible-playbook deploy.yml -i hosts --ask-become-pass
+ansible-playbook deploy.yml -i hosts --vault-password-file=vpwd

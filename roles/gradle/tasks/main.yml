@@ -1,0 +1,23 @@
+---
+- name: Check gradle version
+  stat:
+    path: "{{ gradle_bin }}"
+  register: gradle_current
+
+- debug: 
+    msg: "Gradle already installed"
+  when: gradle_current.stat.exists
+
+- name: Gradle setup 
+  include_tasks: setup-gradle.yml
+  when: gradle_current.stat.exists == False
+
+- name: Show gradle version
+  command: "{{ gradle_bin }} -v"
+  changed_when: False
+  register: gradle_ver
+
+- debug:
+    var: gradle_ver.stdout_lines
+  
+
