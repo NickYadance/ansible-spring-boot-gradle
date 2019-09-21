@@ -1,6 +1,11 @@
 ---
-- name: Ensure Java8 is installed
+- name: Install jdk1.8
   package: 
    name: "{{ __java_packages }}"
    state: present
+
+- name: Install jdk1.8-devel
+  package:
+    name: java-1.8.0-openjdk-devel.x86_64
+    state: present
     

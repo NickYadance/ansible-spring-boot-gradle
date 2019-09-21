@@ -1,0 +1,78 @@
+---
+- name: Install pip
+  package:
+    name: python-pip
+    state: present
+
+- name: Install supervisor
+  pip:
+    name: supervisor
+
+- name: Install git
+  package:
+    name: git
+    state: present
+
+- name: Clear repo 
+  file:
+    path: "{{ app_repo_dir }}"
+    state: absent
+
+- name: Pull repo
+  git:
+    repo: "{{ app_repo }}"
+    dest: "{{ app_repo_dir }}"
+
+- name: Set repo permissions
+  file:
+    path: "{{ app_repo_dir }}"
+    state: directory
+    recurse: yes
+    owner: wuyi
+    group: wuyi
+    mode: "0755"
+
+- name: Get app properties
+  shell: /usr/local/bin/gradle properties | grep version | grep -o -E '\S+$'
+  args: 
+    chdir: "{{ app_repo_dir }}"
+  register: app_version
+
+- name: Gradle build
+  command: /usr/local/bin/gradle bootJar
+  args:
+    chdir: "{{ app_repo_dir }}"
+
+- name: Make app jar directory
+  file:
+    path: "{{ app_jar_dir }}"
+    state: directory
+
+- name: Make app log dir
+  file:
+    path: "{{ app_stdout_dir }}"
+    mode: "0755"
+    state: directory
+    
+- name: Make app log file
+  file:
+    path: "{{ app_stdout_file }}"
+    mode: "0755"
+    state: touch
+
+- name: Move jar
+  copy:
+    remote_src: True
+    src: "{{ gradle_jar_dir }}/{{ app_name }}-{{ app_version.stdout }}.jar"
+    dest: "{{ app_jar }}"
+
+- name: Make supervisor config directory
+  file:
+    path: "{{ supervisor_cfg_dir }}"
+    state: directory
+
+- name: Supervisor config
+  template:
+    src: app.conf.j2
+    dest: "{{ supervisor_cfg_dir }}/{{ app_name }}.conf"
+    

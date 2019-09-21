@@ -1,0 +1,12 @@
+---
+app_name: demo
+app_repo: https://github.com/NickYadance/spring-boot-demo.git
+app_repo_dir: "/release/repo/{{ app_name }}"
+app_jar_dir: "/release/jar/{{ app_name }}"
+app_jar : "{{ app_jar_dir }}/{{ app_name }}.jar"
+app_stdout_dir: "/data/logs/{{ app_name }}"
+app_stdout_file: "{{ app_stdout_dir }}/{{ app_name }}.log"
+
+gradle_jar_dir: "{{ app_repo_dir }}/build/libs"
+
+supervisor_cfg_dir: /etc/supervisor 

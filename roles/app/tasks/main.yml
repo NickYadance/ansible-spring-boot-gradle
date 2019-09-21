@@ -1,0 +1,16 @@
+---
+- name: build 
+  include: build.yml
+  tags: [build]
+
+- name: restart
+  supervisorctl:
+    name: "{{ app_name }}"
+    state: restarted
+  tags: [restart]
+
+- name: start
+  supervisorctl:
+    name: "{{ app_name }}"
+    state: present
+  tags: [start]
