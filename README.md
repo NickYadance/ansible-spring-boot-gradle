@@ -9,6 +9,7 @@ Ansible playbook for Spring Boot java apps deployment.
 
 # How to run
 1. use ansible-vault to write your guest sudo password into `pwd.yml`
+2. `app_name` in vars/main.yml **MUST** be same as `rootProject.name` in the settings.gradle of your app
 2. change the guest ip of hosts
 3. there are two start scripts:
 * start.sh: for the first time deployment, with environment setup
