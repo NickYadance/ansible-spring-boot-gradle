@@ -1,8 +1,0 @@
----
-- name: YUM epel
-  yum_repository:
-      name: epel
-      description: EPEL YUM repo
-      baseurl: http://mirrors.aliyun.com/epel/7/$basearch
-      gpgcheck: no
-      enabled: yes

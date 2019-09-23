@@ -1,9 +1,0 @@
----
-gradle_version : "5.6.2"
-gradle_zip : "gradle-{{ gradle_version }}-bin.zip"
-gradle_download_url : "https://services.gradle.org/distributions/{{ gradle_zip }}"
-gradle_checksum : "sha256:32fce6628848f799b0ad3205ae8db67d0d828c10ffe62b748a7c0d9f4a5d9ee0"
-gradle_download_dest : "/tmp/{{ gradle_zip }}"
-gradle_dir: /usr/local/share
-gradle_bin: /usr/local/bin/gradle
-

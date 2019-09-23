@@ -6,7 +6,4 @@
   remote_user: wuyi    
   become: yes
   roles:
-    - yum
-    - java
-    - gradle
     - app

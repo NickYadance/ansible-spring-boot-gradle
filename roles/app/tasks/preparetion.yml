@@ -1,0 +1,109 @@
+---
+# install packages
+- name: YUM epel
+  yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      baseurl: http://mirrors.aliyun.com/epel/7/$basearch
+      gpgcheck: no
+      enabled: yes
+
+- name: Update yum
+  command: yum update -y
+
+- name: Install pip
+  package:
+    name: python-pip
+    state: present
+
+- name: Install supervisor
+  pip:
+    name: supervisor
+
+- name: Install git
+  package:
+    name: git
+    state: present
+
+- name: Install jdk1.8
+  package: 
+   name: "{{ java_version }}"
+   state: present
+
+- name: Install jdk1.8-devel
+  package:
+    name: "{{ java_devel_version }}"
+    state: present
+
+- name: Install zip util
+  become: yes
+  package:
+    name: unzip
+    state: latest
+
+# gradle
+- name: "Download {{ gradle_zip }}"
+  get_url:
+      url: "{{ gradle_download_url }}"
+      dest: "{{ gradle_download_dest }}"
+      checksum: "{{ gradle_checksum }}"
+
+- name: "Unzip {{ gradle_zip }}"
+  unarchive:
+      src: "{{ gradle_download_dest }}"
+      dest: "{{ gradle_dir }}"
+      remote_src: True
+
+- name: "Add gradle bin"
+  file:
+      src: "{{ gradle_dir }}/gradle-{{ gradle_version }}/bin/gradle"
+      dest: "{{ gradle_bin }}"
+      owner: root
+      group: root
+      state: link
+
+# app
+- name: Make app jar directory
+  file:
+    path: "{{ app_jar_dir }}"
+    state: directory
+
+- name: Make app log directory
+  file:
+    path: "{{ app_stdout_dir }}"
+    mode: "0755"
+    state: directory
+    
+- name: Make app log directory
+  file:
+    path: "{{ app_stdout_file }}"
+    mode: "0755"
+    state: touch
+
+# supervisord
+- name: Make supervisord log directory
+  file:
+    path: "{{ supervisord_log_path }}"
+    mode: "0755"
+    state: directory
+
+- name: Make supervisord default conf directory
+  file:
+    path: "{{ supervisord_conf_path }}"
+    mode: "0755"
+    state: directory
+
+- name: Make supervisord default conf
+  template:
+    src: supervisord.conf.j2
+    dest: "{{ supervisord_conf_path }}/supervisord.conf"
+
+- name: Run supervisord
+  command: supervisord
+
+# supervisorctl
+- name: Make supervisorctl config directory
+  file:
+    path: "{{ supervisor_cfg_dir }}"
+    state: directory
+    mode: "0755"

@@ -1,4 +1,25 @@
 ---
+# supervisord
+supervisord_sock_file: /var/run/supervisord.sock
+supervisord_pid_file: /var/run/supervisord.pid
+supervisord_log_path: /data/logs/supervisord
+supervisord_conf_path: /etc/supervisor
+
+# java
+java_version: java-1.8.0-openjdk
+java_devel_version: java-1.8.0-openjdk-devel.x86_64
+
+# gradle
+gradle_version : "5.6.2"
+gradle_zip : "gradle-{{ gradle_version }}-bin.zip"
+gradle_download_url : "https://services.gradle.org/distributions/{{ gradle_zip }}"
+gradle_checksum : "sha256:32fce6628848f799b0ad3205ae8db67d0d828c10ffe62b748a7c0d9f4a5d9ee0"
+gradle_download_dest : "/tmp/{{ gradle_zip }}"
+gradle_dir: /usr/local/share
+gradle_bin: /usr/local/bin/gradle
+gradle_jar_dir: "{{ app_repo_dir }}/build/libs"
+
+# app
 app_name: demo
 app_repo: https://github.com/NickYadance/spring-boot-demo.git
 app_repo_dir: "/release/repo/{{ app_name }}"
@@ -7,6 +28,5 @@ app_jar : "{{ app_jar_dir }}/{{ app_name }}.jar"
 app_stdout_dir: "/data/logs/{{ app_name }}"
 app_stdout_file: "{{ app_stdout_dir }}/{{ app_name }}.log"
 
-gradle_jar_dir: "{{ app_repo_dir }}/build/libs"
-
+# supervisor
 supervisor_cfg_dir: /etc/supervisor 

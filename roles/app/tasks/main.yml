@@ -1,4 +1,8 @@
 ---
+- name: preparetion
+  include: preparetion.yml
+  tags: [preparetion]
+
 - name: build 
   include: build.yml
   tags: [build]
