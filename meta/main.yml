@@ -1,6 +1,6 @@
 galaxy_info:
   author: Nicky
-  description: Nick Yadance
+  description: This role provides code-to-service for SpringBoot gradle apps with supervisorctl support, and necessary environment setup for clean Centos7
   company: Nicky, Inc.
 
   # If the issue tracker for your role is not on github, uncomment the
